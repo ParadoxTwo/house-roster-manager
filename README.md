@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Note for branching: 
+    git branch feature1
+    git pull main (get latest updates of main)
+    git checkout feature1
+    git merge main (merge latest updates of main into feature1)
+    (if merge conflict, then fix it manually and then) git add -A, then git commit
+    (opens editor... press escape, type ":wq" return) git push --set-upstream origin feature1
+    then go to github and select feature1 branch
+    at the side there will be a button for compare, review and create pull request. use that to create a pull request.
+    once the code is reviewed then the reviewer pulls the code and merges it into main from github itself.
+
+
 ## Available Scripts
 
 In the project directory, you can run:
