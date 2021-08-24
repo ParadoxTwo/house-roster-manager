@@ -1,8 +1,18 @@
-import {useState} from 'react'
-import { Nav, NavBtn, NavBtnLink, NavMenuBar, NavLink, NavMenu, Bars, Cross } from './NavbarElements'
+import {useState, useEffect} from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
+import LoginButton from './LoginButton'
+import LogoutButton from './LogoutButton'
+import { Nav, NavBtn, NavMenuBar, NavLink, NavMenu, Bars, Cross } from './NavbarElements'
 
 const Navbar = () => {
     const [menuOpened, toggleMenu] = useState(false)
+    const {user} = useAuth0()
+    const [loggedIn, toggleLogin] = useState(user&&true)
+
+    useEffect(()=>{
+        toggleLogin(user&&true)
+    },[user])
+
     return (
         <div>
             <Nav>
@@ -33,10 +43,12 @@ const Navbar = () => {
                     <NavLink to='/contact-us' onClick={()=>toggleMenu(!menuOpened)} activeStyle>
                         CONTACT US
                     </NavLink>
-                    <NavBtnLink to='/signin' className="Btn">Sign In</NavBtnLink>
+                    {loggedIn?<LogoutButton/>:
+                    <LoginButton/>}
                 </NavMenuBar>
                 <NavBtn>
-                    <NavBtnLink to='/signin'>Sign In</NavBtnLink>
+                    {loggedIn?<LogoutButton/>:
+                    <LoginButton/>}
                 </NavBtn>
             </Nav>
         </div>
