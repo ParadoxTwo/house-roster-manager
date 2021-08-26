@@ -1,14 +1,20 @@
-//imports
+//IMPORTS
 const express = require('express');
 const cors = require('cors')
 const app = express()
 
-//misc
+
+//MISC
 const PORT = process.env.PORT || 5000
 
-//middleware
+
+//MIDDLEWARE
 app.use(cors())
 app.use(express.json())
+
+
+//ROUTES
+app.use('/user', require('./api/user'))
 
 app.listen(PORT, ()=>{
     console.log(`Listening at port ${PORT}...`)
