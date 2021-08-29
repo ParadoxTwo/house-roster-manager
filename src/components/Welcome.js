@@ -1,5 +1,4 @@
 import React from 'react'
-import Profile from './Profile'
 
 const Welcome = () => {
     return (
@@ -8,7 +7,7 @@ const Welcome = () => {
             <br/>
             <br/>
             <br/>
-            <Profile/>
+            Welcome Brat!
         </div>
     )
 }
