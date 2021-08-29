@@ -5,6 +5,7 @@ import Home from './components/Home'
 import Welcome from './components/Welcome';
 import About from './components/About';
 import Contact from './components/Contact';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
           <Route path='/home' component={Home}/>
           <Route path='/about' component={About}/>
           <Route path='/contact-us' component={Contact}/>
+          <Route path='/profile' component={Profile}/>
+          
         </Switch>
       </Router>
       

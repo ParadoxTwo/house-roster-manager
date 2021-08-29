@@ -5,12 +5,15 @@ const pool = require('../db')
 //create a user
 route.post("/create", async(req,res)=>{
     try {
-        const {emailId, emailIdVisible, fullName, dob, dobVisible, fullAddress, fullAddressVisible, bio} = req.body
+        let {emailId, emailIdVisible, fullName, dob, dobVisible, fullAddress, fullAddressVisible, bio, imgUrl} = req.body
+        if(dob===''){
+            dob="01/01/1000"
+        }
         const newUser = await pool.query(
-            "INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", //adding " RETURNING *" will return the rows which could be used if needed (newUser.rows)//(email_id, email_id_visible, full_name, dob, dob_visible, full_address, full_address_visible, bio) 
-            [emailId, emailIdVisible, fullName, dob, dobVisible, fullAddress, fullAddressVisible, bio]
+            "INSERT INTO users VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)", //adding " RETURNING *" will return the rows which could be used if needed (newUser.rows)//(email_id, email_id_visible, full_name, dob, dob_visible, full_address, full_address_visible, bio) 
+            [emailId, emailIdVisible, fullName, dob, dobVisible, fullAddress, fullAddressVisible, bio, imgUrl]
         ).catch(error=>{
-            // console.log(error)
+            console.log(error)
             res.send(error)
         })
         res.json(newUser)
@@ -42,10 +45,22 @@ route.get("/get", async(req,res)=>{
     }
 })
 
+//image experiments
+route.post("/image", async(req, res)=>{
+    try {
+        const {imgPath} = req.body
+    } catch (error) {
+        console.error(error)
+    }
+})
+
 //update a user's info
 route.put("/update", async(req,res)=>{
     try {
-        const {emailId, emailIdVisible, fullName, dob, dobVisible, fullAddress, fullAddressVisible, bio} = req.body                                 
+        let {emailId, emailIdVisible, fullName, dob, dobVisible, fullAddress, fullAddressVisible, bio, imgUrl} = req.body        
+        if(dob===''){
+            dob="01/01/1000"
+        }                         
         const qResult = await pool.query(
             `UPDATE users 
             SET email_id=$1, 
@@ -55,14 +70,16 @@ route.put("/update", async(req,res)=>{
                 dob_visible=$5, 
                 full_address=$6, 
                 full_address_visible=$7, 
-                bio=$8
+                bio=$8,
+                img_url=$9
             WHERE email_id='${emailId}' RETURNING *`,
-            [emailId, emailIdVisible, fullName, dob, dobVisible, fullAddress, fullAddressVisible, bio]
+            [emailId, emailIdVisible, fullName, dob, dobVisible, fullAddress, fullAddressVisible, bio, imgUrl]
         ).catch(error=>{
             // console.log(error)
             res.send(error)
+        }).then(result=>{
+            res.send(result)
         })
-        res.json(qResult.rows)
     } catch (error) {
         console.error(error.message)
     }

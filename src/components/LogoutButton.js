@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core'
 const LogoutButton = () => {
     const {logout} = useAuth0()
     return (
-        <Button variant = {'contained'} color = {'primary'} onClick = {()=>logout()}>
+        <Button style={{height: '40px'}} variant = {'contained'} color = {'primary'} onClick = {()=>logout()}>
             Sign Out
         </Button>
     )

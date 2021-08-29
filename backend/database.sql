@@ -8,5 +8,6 @@ CREATE TABLE users(
     dob_visible BOOLEAN,
     full_address VARCHAR(1023),
     full_address_visible BOOLEAN,
-    bio VARCHAR(2047)
+    bio VARCHAR(2047),
+    img_url VARCHAR(1023)
 );
