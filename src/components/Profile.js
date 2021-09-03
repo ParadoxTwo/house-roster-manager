@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'
-import { Button } from '@material-ui/core'
+import { Button, Input } from '@material-ui/core'
+import './profile.scss'
+import { Visibility, VisibilityOff } from '@material-ui/icons'
 
 const Profile = () => {
     const {user} = useAuth0()
@@ -80,7 +82,8 @@ const Profile = () => {
     const update = async ()=>{
         await axios.put('http://localhost:5000/user/update',
             {emailId, emailIdVisible, fullName: name, dob, dobVisible, fullAddress, fullAddressVisible, bio, imgUrl}
-        ).then(()=>{
+        ).then((res)=>{
+            console.log(res)
             setChange(false)
         })
     }
@@ -117,25 +120,35 @@ const Profile = () => {
     }, [emailId, emailIdVisible, name, dob, dobVisible, fullAddress, fullAddressVisible, bio, imgUrl])
     return (
         <div>
-            <div className="main">
-                <img alt="profile" style={{borderRadius: '50%', margin:"10px"}} src={imgUrl}/>
-                <table>
-                    <thead>
-                        <tr><td></td><td></td><th>Visibility</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Name: </td><td><input type="text" value={name} onChange={e=>{setName(e.target.value)}}/></td><td></td></tr>
-                        <tr><td>Email: </td><td>{emailId}</td><td>{emailIdVisible.toString()}</td></tr>
-                        <tr><td>Date of Birth: </td><td><input type="text" value={dob} onChange={e=>{setDob(e.target.value)}}/></td><td>{dobVisible.toString()}</td></tr>
-                        <tr><td>Full Address:</td><td><input type="text" value={fullAddress} onChange={e=>{setFullAddress(e.target.value)}}/></td><td>{fullAddressVisible.toString()}</td></tr>
-                        <tr><td>Bio</td><td><textarea value={bio} onChange={e=>{setBio(e.target.value)}}/></td><td></td></tr>
-                        <tr>
-                            <td></td>
-                            <td><Button style={{height: '40px'}}  variant = {'contained'} color = {'primary'} disabled = {!change} onClick = {update}>Update</Button></td>
-                            <td><Button style={{height: '40px'}}  variant = {'contained'} color = {'primary'} onClick={cancel}>Cancel</Button></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div className="content">
+                <div className="dp-container">
+                    <div className="overlay">
+                        <img className="profile-picture"alt="profile" src={imgUrl}/>
+                        <div className="after"><Button  variant = {'contained'}>Change DP</Button></div>
+                    </div>
+                    <span className="name">{dbUserData?dbUserData.full_name:""}</span>
+                </div>
+                <div className="table-container">
+                    <span className="title">Profile Information</span>
+                    <table >
+                        <thead>
+                            <tr><td></td><td></td><th>Visibility</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td className="label">Name: </td><td><Input fullWidth type="text" color='primary' value={name} onChange={e=>{setName(e.target.value)}}/></td><td></td></tr>
+                            <tr><td className="label">Email: </td><td>{emailId}</td><td className="visibility"> {emailIdVisible?<Visibility onClick={()=>setEmailIdVisible(false)}/>:<VisibilityOff onClick={()=>setEmailIdVisible(true)}/>}</td></tr>
+                            <tr><td className="label">Date of Birth: </td><td><Input fullWidth type="text" color='primary' value={dob} onChange={e=>{setDob(e.target.value)}}/></td><td className="visibility">{dobVisible?<Visibility onClick={()=>setDobVisible(false)}/>:<VisibilityOff onClick={()=>setDobVisible(true)}/>}</td></tr>
+                            <tr><td className="label">Full Address:</td><td><Input fullWidth type="text" color='primary' value={fullAddress} onChange={e=>{setFullAddress(e.target.value)}}/></td><td className="visibility">{fullAddressVisible?<Visibility onClick={()=>setFullAddressVisible(false)}/>:<VisibilityOff onClick={()=>setFullAddressVisible(true)}/>}</td></tr>
+                            <tr><td className="label">Bio</td><td><Input className="bio" rows='4' multiline fullWidth value={bio} onChange={e=>{setBio(e.target.value)}}/></td><td></td></tr>
+                            <tr>
+                                <td></td>
+                                <td><Button style={{height: '40px'}}  variant = {'contained'} color = {'primary'} disabled = {!change} onClick = {update}>Update</Button></td>
+                                <td><Button style={{height: '40px'}}  variant = {'contained'} color = {'primary'} onClick={cancel}>Cancel</Button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
             </div>
         </div>
     )

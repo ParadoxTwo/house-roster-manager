@@ -73,9 +73,9 @@ route.put("/update", async(req,res)=>{
                 bio=$8,
                 img_url=$9
             WHERE email_id='${emailId}' RETURNING *`,
-            [emailId, emailIdVisible, fullName, dob, dobVisible, fullAddress, fullAddressVisible, bio, imgUrl]
+            [emailId, emailIdVisible, fullName, new Date(dob), dobVisible, fullAddress, fullAddressVisible, bio, imgUrl]
         ).catch(error=>{
-            // console.log(error)
+            console.log(error)
             res.send(error)
         }).then(result=>{
             res.send(result)
