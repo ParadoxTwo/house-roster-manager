@@ -1,0 +1,96 @@
+.content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    @media screen and (max-width: 800px) {
+        flex-direction: column;
+    }
+}
+.overlay{
+    position: relative;
+    margin: 10px;
+    
+    .profile-picture{
+        border-radius: 50%;
+    }
+}
+.overlay .after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    color: #FFF;
+    border-radius: 50%;
+    color: white;
+}
+.overlay:hover .after {
+    display: flex;
+    text-align: center;
+    align-items: flex-end;
+    Button{
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        cursor: pointer;
+        font-size: medium;
+        padding: 10px 30px 10px 30px;
+        color: white;
+        border-radius: 50%;
+        background-color: rgba(0,0,0,0.6);
+        &:hover{
+            background-color: rgba(0,0,0,0.4)
+        }
+    }
+    background: rgba(0, 0, 0, .3);
+}
+
+.dp-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .name{
+        font-size: 25px;
+    }
+}
+.table-container{
+    
+    @media screen and (max-width: 800px) {
+        margin-top: 50px;
+        border-top: solid 2px black;
+        border-left: 0;
+    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    border-left: dashed 1px black;
+    height: 100%;
+    .title{
+        font-size: 30px;
+    }
+    table{
+        padding: 50px;
+        .label{
+            padding-right: 10px;
+        }
+        .visibility{
+            text-align: center;
+            cursor: pointer;
+        }
+        tr{
+            padding: 20px;
+            
+            td{
+                padding: 20px;
+                
+                .bio{
+                    max-height: 100px;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+}
